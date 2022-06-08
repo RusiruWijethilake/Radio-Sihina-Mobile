@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/homeView"
+        layout="@layout/activity_player"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="60dp"
+        fresco:layout_constraintBottom_toTopOf="@+id/txtVersion"
+        fresco:layout_constraintEnd_toEndOf="parent"
+        fresco:layout_constraintHorizontal_bias="1.0"
+        fresco:layout_constraintStart_toStartOf="parent"
+        fresco:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Developed by Microlion Technologies"
+        android:textColor="?android:attr/colorForeground"
+        android:textSize="12sp"
+        fresco:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        fresco:layout_constraintEnd_toEndOf="parent"
+        fresco:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        fresco:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
