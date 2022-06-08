@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "679358100866",
+    "project_id": "radio-sihina",
+    "storage_bucket": "radio-sihina.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679358100866:android:20cdf65e5e21cf41440b9b",
+        "android_client_info": {
+          "package_name": "lk.microlion.dev.radiosihina"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679358100866-cretl9o47u0v44rd7oc8cm7b9erntrg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkCABRijfaf3DItjE-M9Re4QKh7JNy5pA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679358100866-cretl9o47u0v44rd7oc8cm7b9erntrg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
