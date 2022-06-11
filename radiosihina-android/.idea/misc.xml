@@ -8,13 +8,36 @@
         <entry key="..\:/Business Modules/RadioSihina/Radio-Sihina-Mobile/radiosihina-android/app/src/main/res/layout/activity_offline.xml" value="0.2884963768115942" />
         <entry key="..\:/Business Modules/RadioSihina/Radio-Sihina-Mobile/radiosihina-android/app/src/main/res/layout/activity_player.xml" value="0.28875793291024476" />
         <entry key="..\:/Business Modules/RadioSihina/Radio-Sihina-Mobile/radiosihina-android/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.32222222222222224" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/ic_loading_icon.xml" value="0.1635" />
+        <entry key="app/src/main/res/drawable/ic_round_link_24.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/ic_round_play_arrow_24.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/ic_social_facebook.xml" value="0.2415" />
+        <entry key="app/src/main/res/drawable/shape_background.xml" value="0.2415" />
+        <entry key="app/src/main/res/drawable/shape_no_background.xml" value="0.2415" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_library.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_offline.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_online.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_player.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/activity_presenter.xml" value="0.20923913043478262" />
+        <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3098958333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.30885416666666665" />
+      </ProjectState>
+    </option>
   </component>
 </project>

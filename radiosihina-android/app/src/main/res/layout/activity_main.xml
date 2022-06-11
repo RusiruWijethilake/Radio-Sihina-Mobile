@@ -7,21 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/homeView"
-        layout="@layout/activity_player"
+    <ViewFlipper
+        android:id="@+id/flipperView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:elevation="60dp"
+        android:animateFirstView="true"
+        android:animateLayoutChanges="true"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right"
         fresco:layout_constraintBottom_toTopOf="@+id/txtVersion"
         fresco:layout_constraintEnd_toEndOf="parent"
         fresco:layout_constraintHorizontal_bias="1.0"
         fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toTopOf="parent" />
+        fresco:layout_constraintTop_toTopOf="parent">
+
+        <include
+            layout="@layout/activity_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            layout="@layout/activity_library"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            layout="@layout/activity_presenter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            layout="@layout/activity_about"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </ViewFlipper>
 
     <TextView
         android:id="@+id/txtVersion"

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="lk.microlion.dev.radiosihina">
+    package="lk.microlion.dev.radiosihina" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
 
     <application
         android:allowBackup="true"
+        android:appCategory="audio"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,12 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RadioSihina"
-        android:appCategory="audio"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <service
+            android:name=".RadioPlayerService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="sensorPortrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="sensorPortrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
