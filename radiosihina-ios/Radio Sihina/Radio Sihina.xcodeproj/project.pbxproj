@@ -7,61 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E6464B2D285614F0008C288D /* Radio_SihinaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6464B2C285614F0008C288D /* Radio_SihinaApp.swift */; };
-		E6464B2F285614F0008C288D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6464B2E285614F0008C288D /* ContentView.swift */; };
-		E6464B31285614F0008C288D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6464B30285614F0008C288D /* Assets.xcassets */; };
-		E6464B34285614F0008C288D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6464B33285614F0008C288D /* Preview Assets.xcassets */; };
-		E6464B3E285614F1008C288D /* Radio_SihinaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6464B3D285614F1008C288D /* Radio_SihinaTests.swift */; };
-		E6464B48285614F1008C288D /* Radio_SihinaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6464B47285614F1008C288D /* Radio_SihinaUITests.swift */; };
-		E6464B4A285614F1008C288D /* Radio_SihinaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6464B49285614F1008C288D /* Radio_SihinaUITestsLaunchTests.swift */; };
+		E6D99B2628561681008D225B /* Radio_SihinaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B2528561681008D225B /* Radio_SihinaApp.swift */; };
+		E6D99B2828561681008D225B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B2728561681008D225B /* ContentView.swift */; };
+		E6D99B2A28561683008D225B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D99B2928561683008D225B /* Assets.xcassets */; };
+		E6D99B2D28561683008D225B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D99B2C28561683008D225B /* Preview Assets.xcassets */; };
+		E6D99B3728561683008D225B /* Radio_SihinaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B3628561683008D225B /* Radio_SihinaTests.swift */; };
+		E6D99B4128561683008D225B /* Radio_SihinaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B4028561683008D225B /* Radio_SihinaUITests.swift */; };
+		E6D99B4328561683008D225B /* Radio_SihinaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B4228561683008D225B /* Radio_SihinaUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E6464B3A285614F1008C288D /* PBXContainerItemProxy */ = {
+		E6D99B3328561683008D225B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E6464B21285614F0008C288D /* Project object */;
+			containerPortal = E6D99B1A28561681008D225B /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E6464B28285614F0008C288D;
+			remoteGlobalIDString = E6D99B2128561681008D225B;
 			remoteInfo = "Radio Sihina";
 		};
-		E6464B44285614F1008C288D /* PBXContainerItemProxy */ = {
+		E6D99B3D28561683008D225B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E6464B21285614F0008C288D /* Project object */;
+			containerPortal = E6D99B1A28561681008D225B /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E6464B28285614F0008C288D;
+			remoteGlobalIDString = E6D99B2128561681008D225B;
 			remoteInfo = "Radio Sihina";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E6464B29285614F0008C288D /* Radio Sihina.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Radio Sihina.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6464B2C285614F0008C288D /* Radio_SihinaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaApp.swift; sourceTree = "<group>"; };
-		E6464B2E285614F0008C288D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		E6464B30285614F0008C288D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6464B33285614F0008C288D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E6464B39285614F1008C288D /* Radio SihinaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Radio SihinaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6464B3D285614F1008C288D /* Radio_SihinaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaTests.swift; sourceTree = "<group>"; };
-		E6464B43285614F1008C288D /* Radio SihinaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Radio SihinaUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6464B47285614F1008C288D /* Radio_SihinaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaUITests.swift; sourceTree = "<group>"; };
-		E6464B49285614F1008C288D /* Radio_SihinaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E6D99B2228561681008D225B /* Radio Sihina.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Radio Sihina.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D99B2528561681008D225B /* Radio_SihinaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaApp.swift; sourceTree = "<group>"; };
+		E6D99B2728561681008D225B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E6D99B2928561683008D225B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E6D99B2C28561683008D225B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E6D99B3228561683008D225B /* Radio SihinaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Radio SihinaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D99B3628561683008D225B /* Radio_SihinaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaTests.swift; sourceTree = "<group>"; };
+		E6D99B3C28561683008D225B /* Radio SihinaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Radio SihinaUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D99B4028561683008D225B /* Radio_SihinaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaUITests.swift; sourceTree = "<group>"; };
+		E6D99B4228561683008D225B /* Radio_SihinaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E6464B26285614F0008C288D /* Frameworks */ = {
+		E6D99B1F28561681008D225B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6464B36285614F1008C288D /* Frameworks */ = {
+		E6D99B2F28561683008D225B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6464B40285614F1008C288D /* Frameworks */ = {
+		E6D99B3928561683008D225B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -71,58 +71,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E6464B20285614F0008C288D = {
+		E6D99B1928561681008D225B = {
 			isa = PBXGroup;
 			children = (
-				E6464B2B285614F0008C288D /* Radio Sihina */,
-				E6464B3C285614F1008C288D /* Radio SihinaTests */,
-				E6464B46285614F1008C288D /* Radio SihinaUITests */,
-				E6464B2A285614F0008C288D /* Products */,
+				E6D99B2428561681008D225B /* Radio Sihina */,
+				E6D99B3528561683008D225B /* Radio SihinaTests */,
+				E6D99B3F28561683008D225B /* Radio SihinaUITests */,
+				E6D99B2328561681008D225B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		E6464B2A285614F0008C288D /* Products */ = {
+		E6D99B2328561681008D225B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E6464B29285614F0008C288D /* Radio Sihina.app */,
-				E6464B39285614F1008C288D /* Radio SihinaTests.xctest */,
-				E6464B43285614F1008C288D /* Radio SihinaUITests.xctest */,
+				E6D99B2228561681008D225B /* Radio Sihina.app */,
+				E6D99B3228561683008D225B /* Radio SihinaTests.xctest */,
+				E6D99B3C28561683008D225B /* Radio SihinaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E6464B2B285614F0008C288D /* Radio Sihina */ = {
+		E6D99B2428561681008D225B /* Radio Sihina */ = {
 			isa = PBXGroup;
 			children = (
-				E6464B2C285614F0008C288D /* Radio_SihinaApp.swift */,
-				E6464B2E285614F0008C288D /* ContentView.swift */,
-				E6464B30285614F0008C288D /* Assets.xcassets */,
-				E6464B32285614F0008C288D /* Preview Content */,
+				E6D99B2528561681008D225B /* Radio_SihinaApp.swift */,
+				E6D99B2728561681008D225B /* ContentView.swift */,
+				E6D99B2928561683008D225B /* Assets.xcassets */,
+				E6D99B2B28561683008D225B /* Preview Content */,
 			);
 			path = "Radio Sihina";
 			sourceTree = "<group>";
 		};
-		E6464B32285614F0008C288D /* Preview Content */ = {
+		E6D99B2B28561683008D225B /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				E6464B33285614F0008C288D /* Preview Assets.xcassets */,
+				E6D99B2C28561683008D225B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		E6464B3C285614F1008C288D /* Radio SihinaTests */ = {
+		E6D99B3528561683008D225B /* Radio SihinaTests */ = {
 			isa = PBXGroup;
 			children = (
-				E6464B3D285614F1008C288D /* Radio_SihinaTests.swift */,
+				E6D99B3628561683008D225B /* Radio_SihinaTests.swift */,
 			);
 			path = "Radio SihinaTests";
 			sourceTree = "<group>";
 		};
-		E6464B46285614F1008C288D /* Radio SihinaUITests */ = {
+		E6D99B3F28561683008D225B /* Radio SihinaUITests */ = {
 			isa = PBXGroup;
 			children = (
-				E6464B47285614F1008C288D /* Radio_SihinaUITests.swift */,
-				E6464B49285614F1008C288D /* Radio_SihinaUITestsLaunchTests.swift */,
+				E6D99B4028561683008D225B /* Radio_SihinaUITests.swift */,
+				E6D99B4228561683008D225B /* Radio_SihinaUITestsLaunchTests.swift */,
 			);
 			path = "Radio SihinaUITests";
 			sourceTree = "<group>";
@@ -130,13 +130,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E6464B28285614F0008C288D /* Radio Sihina */ = {
+		E6D99B2128561681008D225B /* Radio Sihina */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E6464B4D285614F1008C288D /* Build configuration list for PBXNativeTarget "Radio Sihina" */;
+			buildConfigurationList = E6D99B4628561683008D225B /* Build configuration list for PBXNativeTarget "Radio Sihina" */;
 			buildPhases = (
-				E6464B25285614F0008C288D /* Sources */,
-				E6464B26285614F0008C288D /* Frameworks */,
-				E6464B27285614F0008C288D /* Resources */,
+				E6D99B1E28561681008D225B /* Sources */,
+				E6D99B1F28561681008D225B /* Frameworks */,
+				E6D99B2028561681008D225B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -144,69 +144,69 @@
 			);
 			name = "Radio Sihina";
 			productName = "Radio Sihina";
-			productReference = E6464B29285614F0008C288D /* Radio Sihina.app */;
+			productReference = E6D99B2228561681008D225B /* Radio Sihina.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E6464B38285614F1008C288D /* Radio SihinaTests */ = {
+		E6D99B3128561683008D225B /* Radio SihinaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E6464B50285614F1008C288D /* Build configuration list for PBXNativeTarget "Radio SihinaTests" */;
+			buildConfigurationList = E6D99B4928561683008D225B /* Build configuration list for PBXNativeTarget "Radio SihinaTests" */;
 			buildPhases = (
-				E6464B35285614F1008C288D /* Sources */,
-				E6464B36285614F1008C288D /* Frameworks */,
-				E6464B37285614F1008C288D /* Resources */,
+				E6D99B2E28561683008D225B /* Sources */,
+				E6D99B2F28561683008D225B /* Frameworks */,
+				E6D99B3028561683008D225B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E6464B3B285614F1008C288D /* PBXTargetDependency */,
+				E6D99B3428561683008D225B /* PBXTargetDependency */,
 			);
 			name = "Radio SihinaTests";
 			productName = "Radio SihinaTests";
-			productReference = E6464B39285614F1008C288D /* Radio SihinaTests.xctest */;
+			productReference = E6D99B3228561683008D225B /* Radio SihinaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E6464B42285614F1008C288D /* Radio SihinaUITests */ = {
+		E6D99B3B28561683008D225B /* Radio SihinaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E6464B53285614F1008C288D /* Build configuration list for PBXNativeTarget "Radio SihinaUITests" */;
+			buildConfigurationList = E6D99B4C28561683008D225B /* Build configuration list for PBXNativeTarget "Radio SihinaUITests" */;
 			buildPhases = (
-				E6464B3F285614F1008C288D /* Sources */,
-				E6464B40285614F1008C288D /* Frameworks */,
-				E6464B41285614F1008C288D /* Resources */,
+				E6D99B3828561683008D225B /* Sources */,
+				E6D99B3928561683008D225B /* Frameworks */,
+				E6D99B3A28561683008D225B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E6464B45285614F1008C288D /* PBXTargetDependency */,
+				E6D99B3E28561683008D225B /* PBXTargetDependency */,
 			);
 			name = "Radio SihinaUITests";
 			productName = "Radio SihinaUITests";
-			productReference = E6464B43285614F1008C288D /* Radio SihinaUITests.xctest */;
+			productReference = E6D99B3C28561683008D225B /* Radio SihinaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E6464B21285614F0008C288D /* Project object */ = {
+		E6D99B1A28561681008D225B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					E6464B28285614F0008C288D = {
+					E6D99B2128561681008D225B = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
-					E6464B38285614F1008C288D = {
+					E6D99B3128561683008D225B = {
 						CreatedOnToolsVersion = 13.4.1;
-						TestTargetID = E6464B28285614F0008C288D;
+						TestTargetID = E6D99B2128561681008D225B;
 					};
-					E6464B42285614F1008C288D = {
+					E6D99B3B28561683008D225B = {
 						CreatedOnToolsVersion = 13.4.1;
-						TestTargetID = E6464B28285614F0008C288D;
+						TestTargetID = E6D99B2128561681008D225B;
 					};
 				};
 			};
-			buildConfigurationList = E6464B24285614F0008C288D /* Build configuration list for PBXProject "Radio Sihina" */;
+			buildConfigurationList = E6D99B1D28561681008D225B /* Build configuration list for PBXProject "Radio Sihina" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -214,36 +214,36 @@
 				en,
 				Base,
 			);
-			mainGroup = E6464B20285614F0008C288D;
-			productRefGroup = E6464B2A285614F0008C288D /* Products */;
+			mainGroup = E6D99B1928561681008D225B;
+			productRefGroup = E6D99B2328561681008D225B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E6464B28285614F0008C288D /* Radio Sihina */,
-				E6464B38285614F1008C288D /* Radio SihinaTests */,
-				E6464B42285614F1008C288D /* Radio SihinaUITests */,
+				E6D99B2128561681008D225B /* Radio Sihina */,
+				E6D99B3128561683008D225B /* Radio SihinaTests */,
+				E6D99B3B28561683008D225B /* Radio SihinaUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E6464B27285614F0008C288D /* Resources */ = {
+		E6D99B2028561681008D225B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6464B34285614F0008C288D /* Preview Assets.xcassets in Resources */,
-				E6464B31285614F0008C288D /* Assets.xcassets in Resources */,
+				E6D99B2D28561683008D225B /* Preview Assets.xcassets in Resources */,
+				E6D99B2A28561683008D225B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6464B37285614F1008C288D /* Resources */ = {
+		E6D99B3028561683008D225B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6464B41285614F1008C288D /* Resources */ = {
+		E6D99B3A28561683008D225B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,49 +253,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E6464B25285614F0008C288D /* Sources */ = {
+		E6D99B1E28561681008D225B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6464B2F285614F0008C288D /* ContentView.swift in Sources */,
-				E6464B2D285614F0008C288D /* Radio_SihinaApp.swift in Sources */,
+				E6D99B2828561681008D225B /* ContentView.swift in Sources */,
+				E6D99B2628561681008D225B /* Radio_SihinaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6464B35285614F1008C288D /* Sources */ = {
+		E6D99B2E28561683008D225B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6464B3E285614F1008C288D /* Radio_SihinaTests.swift in Sources */,
+				E6D99B3728561683008D225B /* Radio_SihinaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6464B3F285614F1008C288D /* Sources */ = {
+		E6D99B3828561683008D225B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6464B4A285614F1008C288D /* Radio_SihinaUITestsLaunchTests.swift in Sources */,
-				E6464B48285614F1008C288D /* Radio_SihinaUITests.swift in Sources */,
+				E6D99B4328561683008D225B /* Radio_SihinaUITestsLaunchTests.swift in Sources */,
+				E6D99B4128561683008D225B /* Radio_SihinaUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E6464B3B285614F1008C288D /* PBXTargetDependency */ = {
+		E6D99B3428561683008D225B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E6464B28285614F0008C288D /* Radio Sihina */;
-			targetProxy = E6464B3A285614F1008C288D /* PBXContainerItemProxy */;
+			target = E6D99B2128561681008D225B /* Radio Sihina */;
+			targetProxy = E6D99B3328561683008D225B /* PBXContainerItemProxy */;
 		};
-		E6464B45285614F1008C288D /* PBXTargetDependency */ = {
+		E6D99B3E28561683008D225B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E6464B28285614F0008C288D /* Radio Sihina */;
-			targetProxy = E6464B44285614F1008C288D /* PBXContainerItemProxy */;
+			target = E6D99B2128561681008D225B /* Radio Sihina */;
+			targetProxy = E6D99B3D28561683008D225B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		E6464B4B285614F1008C288D /* Debug */ = {
+		E6D99B4428561683008D225B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -355,7 +355,7 @@
 			};
 			name = Debug;
 		};
-		E6464B4C285614F1008C288D /* Release */ = {
+		E6D99B4528561683008D225B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -409,7 +409,7 @@
 			};
 			name = Release;
 		};
-		E6464B4E285614F1008C288D /* Debug */ = {
+		E6D99B4728561683008D225B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -423,14 +423,13 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "lk.microlion.dev.Radio-Sihina";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -439,7 +438,7 @@
 			};
 			name = Debug;
 		};
-		E6464B4F285614F1008C288D /* Release */ = {
+		E6D99B4828561683008D225B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -453,14 +452,13 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "lk.microlion.dev.Radio-Sihina";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -469,7 +467,7 @@
 			};
 			name = Release;
 		};
-		E6464B51285614F1008C288D /* Debug */ = {
+		E6D99B4A28561683008D225B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -489,7 +487,7 @@
 			};
 			name = Debug;
 		};
-		E6464B52285614F1008C288D /* Release */ = {
+		E6D99B4B28561683008D225B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -509,7 +507,7 @@
 			};
 			name = Release;
 		};
-		E6464B54285614F1008C288D /* Debug */ = {
+		E6D99B4D28561683008D225B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -527,7 +525,7 @@
 			};
 			name = Debug;
 		};
-		E6464B55285614F1008C288D /* Release */ = {
+		E6D99B4E28561683008D225B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -548,43 +546,43 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E6464B24285614F0008C288D /* Build configuration list for PBXProject "Radio Sihina" */ = {
+		E6D99B1D28561681008D225B /* Build configuration list for PBXProject "Radio Sihina" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E6464B4B285614F1008C288D /* Debug */,
-				E6464B4C285614F1008C288D /* Release */,
+				E6D99B4428561683008D225B /* Debug */,
+				E6D99B4528561683008D225B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E6464B4D285614F1008C288D /* Build configuration list for PBXNativeTarget "Radio Sihina" */ = {
+		E6D99B4628561683008D225B /* Build configuration list for PBXNativeTarget "Radio Sihina" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E6464B4E285614F1008C288D /* Debug */,
-				E6464B4F285614F1008C288D /* Release */,
+				E6D99B4728561683008D225B /* Debug */,
+				E6D99B4828561683008D225B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E6464B50285614F1008C288D /* Build configuration list for PBXNativeTarget "Radio SihinaTests" */ = {
+		E6D99B4928561683008D225B /* Build configuration list for PBXNativeTarget "Radio SihinaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E6464B51285614F1008C288D /* Debug */,
-				E6464B52285614F1008C288D /* Release */,
+				E6D99B4A28561683008D225B /* Debug */,
+				E6D99B4B28561683008D225B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E6464B53285614F1008C288D /* Build configuration list for PBXNativeTarget "Radio SihinaUITests" */ = {
+		E6D99B4C28561683008D225B /* Build configuration list for PBXNativeTarget "Radio SihinaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E6464B54285614F1008C288D /* Debug */,
-				E6464B55285614F1008C288D /* Release */,
+				E6D99B4D28561683008D225B /* Debug */,
+				E6D99B4E28561683008D225B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E6464B21285614F0008C288D /* Project object */;
+	rootObject = E6D99B1A28561681008D225B /* Project object */;
 }
