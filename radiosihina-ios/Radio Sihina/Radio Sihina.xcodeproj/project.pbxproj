@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E686B89F28564B8400C7F79E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E686B89E28564B8400C7F79E /* FirebaseAnalytics */; };
+		E686B8A128564B8400C7F79E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E686B8A028564B8400C7F79E /* FirebaseFirestore */; };
+		E686B8A328564B8400C7F79E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E686B8A228564B8400C7F79E /* FirebaseStorage */; };
+		E6B464532856539400C08CCF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6B464522856539400C08CCF /* GoogleService-Info.plist */; };
 		E6D99B2628561681008D225B /* Radio_SihinaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B2528561681008D225B /* Radio_SihinaApp.swift */; };
 		E6D99B2828561681008D225B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B2728561681008D225B /* ContentView.swift */; };
 		E6D99B2A28561683008D225B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D99B2928561683008D225B /* Assets.xcassets */; };
@@ -14,6 +18,8 @@
 		E6D99B3728561683008D225B /* Radio_SihinaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B3628561683008D225B /* Radio_SihinaTests.swift */; };
 		E6D99B4128561683008D225B /* Radio_SihinaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B4028561683008D225B /* Radio_SihinaUITests.swift */; };
 		E6D99B4328561683008D225B /* Radio_SihinaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D99B4228561683008D225B /* Radio_SihinaUITestsLaunchTests.swift */; };
+		E6F5297C2856637000EFC63F /* SwiftAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = E6F5297B2856637000EFC63F /* SwiftAudioPlayer */; };
+		E6F5297E285669D100EFC63F /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F5297D285669D100EFC63F /* FirestoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E6B464522856539400C08CCF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E6B464562856588500C08CCF /* Radio-Sihina-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Radio-Sihina-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E6D99B2228561681008D225B /* Radio Sihina.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Radio Sihina.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D99B2528561681008D225B /* Radio_SihinaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaApp.swift; sourceTree = "<group>"; };
 		E6D99B2728561681008D225B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +52,7 @@
 		E6D99B3C28561683008D225B /* Radio SihinaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Radio SihinaUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D99B4028561683008D225B /* Radio_SihinaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaUITests.swift; sourceTree = "<group>"; };
 		E6D99B4228561683008D225B /* Radio_SihinaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio_SihinaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E6F5297D285669D100EFC63F /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +60,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6F5297C2856637000EFC63F /* SwiftAudioPlayer in Frameworks */,
+				E686B89F28564B8400C7F79E /* FirebaseAnalytics in Frameworks */,
+				E686B8A128564B8400C7F79E /* FirebaseFirestore in Frameworks */,
+				E686B8A328564B8400C7F79E /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,10 +107,13 @@
 		E6D99B2428561681008D225B /* Radio Sihina */ = {
 			isa = PBXGroup;
 			children = (
+				E6B464562856588500C08CCF /* Radio-Sihina-Info.plist */,
+				E6B464522856539400C08CCF /* GoogleService-Info.plist */,
 				E6D99B2528561681008D225B /* Radio_SihinaApp.swift */,
 				E6D99B2728561681008D225B /* ContentView.swift */,
 				E6D99B2928561683008D225B /* Assets.xcassets */,
 				E6D99B2B28561683008D225B /* Preview Content */,
+				E6F5297D285669D100EFC63F /* FirestoreManager.swift */,
 			);
 			path = "Radio Sihina";
 			sourceTree = "<group>";
@@ -143,6 +159,12 @@
 			dependencies = (
 			);
 			name = "Radio Sihina";
+			packageProductDependencies = (
+				E686B89E28564B8400C7F79E /* FirebaseAnalytics */,
+				E686B8A028564B8400C7F79E /* FirebaseFirestore */,
+				E686B8A228564B8400C7F79E /* FirebaseStorage */,
+				E6F5297B2856637000EFC63F /* SwiftAudioPlayer */,
+			);
 			productName = "Radio Sihina";
 			productReference = E6D99B2228561681008D225B /* Radio Sihina.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +237,10 @@
 				Base,
 			);
 			mainGroup = E6D99B1928561681008D225B;
+			packageReferences = (
+				E686B89D28564B8400C7F79E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E6F5297A2856637000EFC63F /* XCRemoteSwiftPackageReference "SwiftAudioPlayer" */,
+			);
 			productRefGroup = E6D99B2328561681008D225B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,6 +259,7 @@
 			files = (
 				E6D99B2D28561683008D225B /* Preview Assets.xcassets in Resources */,
 				E6D99B2A28561683008D225B /* Assets.xcassets in Resources */,
+				E6B464532856539400C08CCF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6D99B2828561681008D225B /* ContentView.swift in Sources */,
+				E6F5297E285669D100EFC63F /* FirestoreManager.swift in Sources */,
 				E6D99B2628561681008D225B /* Radio_SihinaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,9 +448,10 @@
 				DEVELOPMENT_TEAM = 4R5U39TG8C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Radio-Sihina-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -449,9 +478,10 @@
 				DEVELOPMENT_TEAM = 4R5U39TG8C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Radio-Sihina-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -583,6 +613,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E686B89D28564B8400C7F79E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		E6F5297A2856637000EFC63F /* XCRemoteSwiftPackageReference "SwiftAudioPlayer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tanhakabir/SwiftAudioPlayer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E686B89E28564B8400C7F79E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E686B89D28564B8400C7F79E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		E686B8A028564B8400C7F79E /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E686B89D28564B8400C7F79E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		E686B8A228564B8400C7F79E /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E686B89D28564B8400C7F79E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		E6F5297B2856637000EFC63F /* SwiftAudioPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6F5297A2856637000EFC63F /* XCRemoteSwiftPackageReference "SwiftAudioPlayer" */;
+			productName = SwiftAudioPlayer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E6D99B1A28561681008D225B /* Project object */;
 }

@@ -10,11 +10,11 @@
         android:enabled="true"
         android:icon="@drawable/ic_round_library_music_24"
         android:title="Library"/>
-    <item
+    <!--item
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/ic_round_people_24"
-        android:title="Presenters"/>
+        android:title="Presenters"/-->
     <item
         android:id="@+id/page_4"
         android:enabled="true"

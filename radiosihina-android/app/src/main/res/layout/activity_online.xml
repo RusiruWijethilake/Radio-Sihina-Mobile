@@ -119,9 +119,36 @@
         android:indeterminate="true"
         android:max="100"
         android:progress="50"
-        android:visibility="gone"
+        android:visibility="invisible"
         fresco:layout_constraintEnd_toEndOf="parent"
         fresco:layout_constraintStart_toStartOf="parent"
         fresco:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adPlayerBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        fresco:adSize="BANNER"
+        fresco:adUnitId="ca-app-pub-3099844222644832/2370641105"
+        fresco:layout_constraintEnd_toEndOf="parent"
+        fresco:layout_constraintStart_toStartOf="parent"
+        fresco:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <TextView
+        android:id="@+id/txtWhyAdsOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Why ads? To support the maintenance of Radio Sihina services"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/material_dynamic_neutral50"
+        android:textSize="8sp"
+        fresco:layout_constraintEnd_toEndOf="parent"
+        fresco:layout_constraintStart_toStartOf="parent"
+        fresco:layout_constraintTop_toBottomOf="@+id/adPlayerBottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Radio Sihina android app is the official player for android mobile devices. The app provide easy access to Radio Sihina services such as radio player, audio library, presenter panel and in app notifications"
+                android:text="Radio Sihina android app is the official player for android mobile devices. The app provide easy access to Radio Sihina services such as radio player, audio library, presenter panel and in app notifications."
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="16sp" />
