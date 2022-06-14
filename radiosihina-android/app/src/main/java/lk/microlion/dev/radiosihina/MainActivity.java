@@ -318,6 +318,9 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                             } else {
                                 loadingPopup.dismiss();
                                 playerFlipper.setDisplayedChild(0);
+                                if(player.isPlaying() && playButton.getText().toString().equals("Stop")){
+                                    player.stop();
+                                }
                             }
                         } else {
                             loadingPopup.dismiss();
@@ -437,15 +440,26 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                 player.setDataSource(streamUrl);
                 player.prepare();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    playerNotification = new Notification.Builder(MainActivity.this)
-                            .setSmallIcon(R.mipmap.ic_launcher_round)
-                            .setContentTitle("Radio Sihina Live")
-                            .setContentText("Now playing " + streamName + " by " + streamBy)
-                            .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
-                            .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
-                            .setOngoing(true)
-                            .setAutoCancel(false)
-                            .setPriority(Notification.PRIORITY_HIGH);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        playerNotification = new Notification.Builder(MainActivity.this)
+                                .setSmallIcon(R.mipmap.ic_launcher_round)
+                                .setContentTitle("Radio Sihina Live")
+                                .setContentText("Now playing " + streamName + " by " + streamBy)
+                                .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
+                                .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
+                                .setOngoing(true)
+                                .setAutoCancel(false)
+                                .setChannelId(getString(R.string.default_notification_channel_id));
+                    } else {
+                        playerNotification = new Notification.Builder(MainActivity.this)
+                                .setSmallIcon(R.mipmap.ic_launcher_round)
+                                .setContentTitle("Radio Sihina Live")
+                                .setContentText("Now playing " + streamName + " by " + streamBy)
+                                .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
+                                .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
+                                .setOngoing(true)
+                                .setAutoCancel(false);
+                    }
                     notificationManager.notify(0, playerNotification.build());
                 } else {
                     playerNotification = new Notification.Builder(MainActivity.this)
