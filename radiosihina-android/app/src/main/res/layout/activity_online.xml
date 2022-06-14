@@ -6,149 +6,183 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/streamImage"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="64dp"
-        fresco:fadeDuration="300"
-        fresco:failureImage="@drawable/img_program_placeholder"
-        fresco:layout_constraintEnd_toEndOf="parent"
-        fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toTopOf="parent"
-        fresco:placeholderImage="@drawable/img_program_placeholder"
-        fresco:roundedCornerRadius="25dp" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:orientation="vertical"
-        fresco:layout_constraintEnd_toEndOf="parent"
-        fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toBottomOf="@+id/streamImage">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Now Playing"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <TextView
-            android:id="@+id/txtProgramName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Sample Program"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Presentered By"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
-        <TextView
-            android:id="@+id/txtProgramBy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="John Doe"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:orientation="horizontal"
+        fresco:layout_constraintBottom_toBottomOf="parent"
         fresco:layout_constraintEnd_toEndOf="parent"
         fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        fresco:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPlay"
-            style="@style/Widget.Material3.Button.TonalButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="playAudio"
-            android:text="Play"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            app:icon="@drawable/ic_round_play_arrow_24"
-            fresco:iconSize="32dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/shareStream"
-            style="@style/Widget.Material3.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:onClick="shareStream"
-            android:text="Share"
-            app:icon="@drawable/ic_round_link_24" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/streamImageHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="32dp"
+                fresco:cardCornerRadius="25dp"
+                fresco:cardElevation="15dp"
+                fresco:layout_constraintEnd_toEndOf="parent"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/streamImage"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    fresco:fadeDuration="300"
+                    fresco:failureImage="@drawable/img_program_placeholder"
+                    fresco:placeholderImage="@drawable/img_program_placeholder"
+                    fresco:roundAsCircle="false"
+                    fresco:roundedCornerRadius="25dp"
+                    fresco:viewAspectRatio="1" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:indeterminate="true"
-        android:max="100"
-        android:progress="50"
-        android:visibility="invisible"
-        fresco:layout_constraintEnd_toEndOf="parent"
-        fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            </androidx.cardview.widget.CardView>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adPlayerBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        fresco:adSize="BANNER"
-        fresco:adUnitId="ca-app-pub-3099844222644832/2370641105"
-        fresco:layout_constraintEnd_toEndOf="parent"
-        fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                fresco:layout_constraintEnd_toEndOf="parent"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toBottomOf="@+id/streamImageHolder">
 
-    <TextView
-        android:id="@+id/txtWhyAdsOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Why ads? To support the maintenance of Radio Sihina services"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/material_dynamic_neutral50"
-        android:textSize="8sp"
-        fresco:layout_constraintEnd_toEndOf="parent"
-        fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toBottomOf="@+id/adPlayerBottom" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Now Playing"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/txtProgramName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Sample Program"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Presentered By"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:id="@+id/txtProgramBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="John Doe"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                fresco:layout_constraintEnd_toEndOf="parent"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPlay"
+                    style="@style/Widget.Material3.Button.TonalButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="playAudio"
+                    android:text="Play"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:icon="@drawable/ic_round_play_arrow_24"
+                    fresco:iconSize="32dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/shareStream"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:onClick="shareStream"
+                    android:text="Share"
+                    app:icon="@drawable/ic_round_link_24" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:indeterminate="true"
+                android:max="100"
+                android:progress="50"
+                android:visibility="invisible"
+                fresco:layout_constraintEnd_toEndOf="parent"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adPlayerBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                fresco:adSize="BANNER"
+                fresco:adUnitId="ca-app-pub-3099844222644832/2370641105"
+                fresco:layout_constraintEnd_toEndOf="parent"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+            <TextView
+                android:id="@+id/txtWhyAdsOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="Why ads? To support the maintenance of Radio Sihina services"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textSize="8sp"
+                android:visibility="visible"
+                fresco:layout_constraintBottom_toBottomOf="parent"
+                fresco:layout_constraintEnd_toEndOf="parent"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toBottomOf="@+id/adPlayerBottom" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

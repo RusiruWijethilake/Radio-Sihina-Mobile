@@ -5,11 +5,17 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Icon;
 import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.session.MediaSession;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +51,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -61,7 +68,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener, AudioManager.OnAudioFocusChangeListener {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseFirestore db;
@@ -86,13 +93,17 @@ public class MainActivity extends AppCompatActivity {
     private String streamBy = "";
     private Uri streamImgUrl;
     private boolean streamOnline = false;
-    private final boolean mediaReady = false;
+    private boolean isInternetAvailable = false;
     private boolean serviceBound = false;
     private HashMap<String, String> programMap;
 
     private MediaPlayer player;
     private Notification.Builder playerNotification;
     private NotificationManager notificationManager;
+    private AudioManager audioManager;
+    private AudioFocusRequest focusRequest;
+
+    private NetworkStateReceiver networkStateReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +137,48 @@ public class MainActivity extends AppCompatActivity {
 
         player = new MediaPlayer();
 
+        player.setWakeMode(MainActivity.this, PowerManager.PARTIAL_WAKE_LOCK);
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                if(libraryPlayer.getVisibility() != View.VISIBLE) {
+                    bufferBar.setVisibility(View.VISIBLE);
+                    if (percent == 100.00) {
+                        bufferBar.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    audioManager.requestAudioFocus(focusRequest);
+                }
+                mp.start();
+            }
+        });
+        player.setAudioAttributes(new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setLegacyStreamType(AudioAttributes.FLAG_LOW_LATENCY)
+                .build());
+
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        startNetworkBroadcastReceiver(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setAudioAttributes(new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setLegacyStreamType(AudioAttributes.FLAG_LOW_LATENCY)
+                            .build())
+                    .setAcceptsDelayedFocusGain(true)
+                    .setOnAudioFocusChangeListener(this::onAudioFocusChange)
+                    .build();
+        }
 
         loadingPopup = new MaterialAlertDialogBuilder(this)
                 .setCancelable(false)
@@ -303,6 +355,20 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void startNetworkBroadcastReceiver(Context currentContext) {
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener((NetworkStateReceiver.NetworkStateReceiverListener) currentContext);
+        registerNetworkBroadcastReceiver(currentContext);
+    }
+
+    public void registerNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    public void unregisterNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.unregisterReceiver(networkStateReceiver);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -310,9 +376,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
-
         int selectedItem = navbar.getSelectedItemId();
+
+        registerNetworkBroadcastReceiver(this);
 
         if(selectedItem== R.id.page_1){
             appView.setDisplayedChild(0);
@@ -323,23 +389,19 @@ public class MainActivity extends AppCompatActivity {
         }else if(selectedItem == R.id.page_4){
             appView.setDisplayedChild(3);
         }
+        
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterNetworkBroadcastReceiver(this);
+        super.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean("ServiceState", serviceBound);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        serviceBound = savedInstanceState.getBoolean("ServiceState");
     }
 
     public void playAudio(View view) {
@@ -348,6 +410,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(btnLibraryPlay.getText().toString().equals("Stop")){
             player.stop();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                audioManager.abandonAudioFocusRequest(focusRequest);
+            }
             btnLibraryPlay.setText("Play");
             btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
             libraryPlayer.setVisibility(View.GONE);
@@ -360,61 +425,53 @@ public class MainActivity extends AppCompatActivity {
             playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
         } else {
             if (streamOnline) {
-                try {
-                    player = new MediaPlayer();
-                    player.setWakeMode(MainActivity.this, PowerManager.PARTIAL_WAKE_LOCK);
-                    player.setDataSource(streamUrl);
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setAudioAttributes(new AudioAttributes.Builder()
-                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                    .setLegacyStreamType(AudioAttributes.FLAG_LOW_LATENCY)
-                                    .build());
-                    player.prepare();
-                    player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
-                        @Override
-                        public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                            bufferBar.setVisibility(View.VISIBLE);
-                            if(percent == 100.00){
-                                bufferBar.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                    player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            mp.start();
-                        }
-                    });
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        playerNotification = new Notification.Builder(MainActivity.this)
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setContentTitle("Radio Sihina Live")
-                                .setContentText("Now playing "+streamName+" by "+streamBy)
-                                .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
-                                .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
-                                .setOngoing(true)
-                                .setAutoCancel(false)
-                                .setPriority(Notification.PRIORITY_HIGH);
-                        notificationManager.notify(0, playerNotification.build());
-                    }else{
-                        playerNotification = new Notification.Builder(MainActivity.this)
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setContentTitle("Radio Sihina Live")
-                                .setContentText("Now playing "+streamName+" by "+streamBy)
-                                .setOngoing(true)
-                                .setAutoCancel(false)
-                                .setPriority(Notification.PRIORITY_HIGH);
-                        notificationManager.notify(0, playerNotification.build());
-                    }
-                    playButton.setText("Stop");
-                    playButton.setIconResource(R.drawable.ic_baseline_stop_24);
-                } catch (IOException e) {
-                    Toast.makeText(this, "Can't play the stream. Check you connection.", Toast.LENGTH_SHORT).show();
-                }
+                loadingPopup.show();
+                createARadioStreamPlayer();
             }
         }
         bufferBar.setVisibility(View.INVISIBLE);
         playButton.setEnabled(true);
+    }
+
+    private void createARadioStreamPlayer() {
+        try {
+            if(isInternetAvailable) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    audioManager.requestAudioFocus(focusRequest);
+                }
+                player.reset();
+                player.setDataSource(streamUrl);
+                player.prepare();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    playerNotification = new Notification.Builder(MainActivity.this)
+                            .setSmallIcon(R.mipmap.ic_launcher_round)
+                            .setContentTitle("Radio Sihina Live")
+                            .setContentText("Now playing " + streamName + " by " + streamBy)
+                            .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
+                            .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
+                            .setOngoing(true)
+                            .setAutoCancel(false)
+                            .setPriority(Notification.PRIORITY_HIGH);
+                    notificationManager.notify(0, playerNotification.build());
+                } else {
+                    playerNotification = new Notification.Builder(MainActivity.this)
+                            .setSmallIcon(R.mipmap.ic_launcher_round)
+                            .setContentTitle("Radio Sihina Live")
+                            .setContentText("Now playing " + streamName + " by " + streamBy)
+                            .setOngoing(true)
+                            .setAutoCancel(false)
+                            .setPriority(Notification.PRIORITY_HIGH);
+                    notificationManager.notify(0, playerNotification.build());
+                }
+                playButton.setText("Stop");
+                playButton.setIconResource(R.drawable.ic_baseline_stop_24);
+            }else{
+                Toast.makeText(MainActivity.this, "Can't play due to lost of internet connection!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            Toast.makeText(this, "Can't play the stream. Check you connection.", Toast.LENGTH_SHORT).show();
+        }
+        loadingPopup.dismiss();
     }
 
     private void showInfoMessage(String title, String message) {
@@ -450,54 +507,52 @@ public class MainActivity extends AppCompatActivity {
                 if (btnLibraryPlay.getText().toString().equals("Play")) {
                     if(player.isPlaying()){
                         player.stop();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            audioManager.abandonAudioFocusRequest(focusRequest);
+                        }
                         notificationManager.cancel(0);
                         playButton.setText("Play");
                         playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
                     }
                     try {
-                        player = new MediaPlayer();
-                        player.setWakeMode(MainActivity.this, PowerManager.PARTIAL_WAKE_LOCK);
-                        player.setDataSource(s3);
-                        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        player.setAudioAttributes(new AudioAttributes.Builder()
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .setLegacyStreamType(AudioAttributes.FLAG_LOW_LATENCY)
-                                .build());
-                        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mp) {
-                                mp.start();
+                        if(isInternetAvailable) {
+                            player.reset();
+                            player.setDataSource(s3);
+                            player.prepare();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                playerNotification = new Notification.Builder(MainActivity.this)
+                                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                                        .setContentTitle(s)
+                                        .setContentText(s2)
+                                        .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
+                                        .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
+                                        .setOngoing(true)
+                                        .setAutoCancel(false)
+                                        .setPriority(Notification.PRIORITY_HIGH);
+                                notificationManager.notify(0, playerNotification.build());
+                            } else {
+                                playerNotification = new Notification.Builder(MainActivity.this)
+                                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                                        .setContentTitle(s)
+                                        .setContentText(s2)
+                                        .setOngoing(true)
+                                        .setAutoCancel(false)
+                                        .setPriority(Notification.PRIORITY_HIGH);
+                                notificationManager.notify(0, playerNotification.build());
                             }
-                        });
-                        player.prepare();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            playerNotification = new Notification.Builder(MainActivity.this)
-                                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                                    .setContentTitle(s)
-                                    .setContentText(s2)
-                                    .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
-                                    .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
-                                    .setOngoing(true)
-                                    .setAutoCancel(false)
-                                    .setPriority(Notification.PRIORITY_HIGH);
-                            notificationManager.notify(0, playerNotification.build());
+                            btnLibraryPlay.setText("Stop");
+                            btnLibraryPlay.setIconResource(R.drawable.ic_baseline_stop_24);
                         }else{
-                            playerNotification = new Notification.Builder(MainActivity.this)
-                                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                                    .setContentTitle(s)
-                                    .setContentText(s2)
-                                    .setOngoing(true)
-                                    .setAutoCancel(false)
-                                    .setPriority(Notification.PRIORITY_HIGH);
-                            notificationManager.notify(0, playerNotification.build());
+                            Toast.makeText(MainActivity.this, "Can't play due to lost of internet connection!", Toast.LENGTH_SHORT).show();
                         }
-                        btnLibraryPlay.setText("Stop");
-                        btnLibraryPlay.setIconResource(R.drawable.ic_baseline_stop_24);
                     } catch (IOException e) {
                         Toast.makeText(MainActivity.this, "Can't play the stream. Check you connection.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     player.stop();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        audioManager.abandonAudioFocusRequest(focusRequest);
+                    }
                     btnLibraryPlay.setText("Play");
                     btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
                     libraryPlayer.setVisibility(View.GONE);
@@ -508,10 +563,69 @@ public class MainActivity extends AppCompatActivity {
 
     public void ifPlayingStop(String s, String s1) {
         if(!(txtLibraryName.getText().toString().equals(s) && txtLibraryDate.getText().toString().equals(s1))){
-            player.stop();
+            if(player.isPlaying() && playButton.getText().toString().equals("Play")) {
+                player.stop();
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                audioManager.abandonAudioFocusRequest(focusRequest);
+            }
             btnLibraryPlay.setText("Play");
             btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
             libraryPlayer.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void networkAvailable() {
+        isInternetAvailable = true;
+    }
+
+    @Override
+    public void networkUnavailable() {
+        isInternetAvailable = false;
+        if(player.isPlaying()){
+            Toast.makeText(this, "Player stopped due to network lost", Toast.LENGTH_SHORT).show();
+            player.stop();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                audioManager.abandonAudioFocusRequest(focusRequest);
+            }
+            btnLibraryPlay.setText("Play");
+            btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
+            libraryPlayer.setVisibility(View.GONE);
+            notificationManager.cancel(0);
+            playButton.setText("Play");
+            playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
+        }
+    }
+
+    private boolean playerPaused = false;
+
+    @Override
+    public void onAudioFocusChange(int focusChange) {
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_GAIN:
+                if(playerPaused) {
+                    player.start();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        audioManager.requestAudioFocus(focusRequest);
+                    }
+                    playerPaused = false;
+                }
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                playerPaused = false;
+                player.stop();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    audioManager.abandonAudioFocusRequest(focusRequest);
+                }
+                btnLibraryPlay.setText("Play");
+                btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
+                libraryPlayer.setVisibility(View.GONE);
+                notificationManager.cancel(0);
+                playButton.setText("Play");
+                playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
+                break;
         }
     }
 }
