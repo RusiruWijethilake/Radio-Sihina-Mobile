@@ -65,10 +65,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 
         public ViewHolder(View view) {
             super(view);
-            txtName = (TextView) view.findViewById(R.id.txtLibraryName);
-            txtPresenter = (TextView) view.findViewById(R.id.txtLibraryBy);
-            txtLibraryDate = (TextView) view.findViewById(R.id.txtLibraryDate);
-            btnPlay = (MaterialButton) view.findViewById(R.id.btnLibraryPlay);
+            txtName = view.findViewById(R.id.txtLibraryName);
+            txtPresenter = view.findViewById(R.id.txtLibraryBy);
+            txtLibraryDate = view.findViewById(R.id.txtLibraryDate);
+            btnPlay = view.findViewById(R.id.btnLibraryPlay);
         }
 
         public TextView getTxtName() {

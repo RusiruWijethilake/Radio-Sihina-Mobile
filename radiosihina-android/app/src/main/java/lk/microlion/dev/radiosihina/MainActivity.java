@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private Uri streamImgUrl;
     private boolean streamOnline = false;
     private boolean isInternetAvailable = false;
-    private boolean serviceBound = false;
+    private final boolean serviceBound = false;
     private HashMap<String, String> programMap;
 
     private MediaPlayer player;
