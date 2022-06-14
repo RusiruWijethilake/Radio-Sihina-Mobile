@@ -12,10 +12,6 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.session.MediaSession;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,7 +47,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -70,10 +65,10 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener, AudioManager.OnAudioFocusChangeListener {
 
+    private final boolean serviceBound = false;
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
-
     private MaterialButton playButton, shareStream, btnLibraryPlay;
     private TextView txtNowPlaying, txtPresenter, txtWhyAdsOne, txtLibraryName, txtLibraryBy, txtLibraryDate;
     private AutoCompleteTextView selectLibrary;
@@ -83,18 +78,14 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private AdView adPlayerBottom;
     private RecyclerView libraryProgramList, presenterView;
     private MaterialCardView libraryPlayer;
-
     private ViewFlipper appView, playerFlipper;
-
     private AlertDialog loadingPopup;
-
     private String streamUrl = "";
     private String streamName = "";
     private String streamBy = "";
     private Uri streamImgUrl;
     private boolean streamOnline = false;
     private boolean isInternetAvailable = false;
-    private final boolean serviceBound = false;
     private HashMap<String, String> programMap;
 
     private MediaPlayer player;
@@ -104,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private AudioFocusRequest focusRequest;
 
     private NetworkStateReceiver networkStateReceiver;
+    private boolean playerPaused = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                if(libraryPlayer.getVisibility() != View.VISIBLE) {
+                if (libraryPlayer.getVisibility() != View.VISIBLE) {
                     bufferBar.setVisibility(View.VISIBLE);
                     if (percent == 100.00) {
                         bufferBar.setVisibility(View.INVISIBLE);
@@ -203,15 +195,15 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId() == R.id.page_1){
+                if (item.getItemId() == R.id.page_1) {
                     appView.setDisplayedChild(0);
-                }else if(item.getItemId() == R.id.page_2){
+                } else if (item.getItemId() == R.id.page_2) {
                     appView.setDisplayedChild(1);
-                //}else if(item.getItemId() == R.id.page_3){
-                //    appView.setDisplayedChild(2);
-                }else if(item.getItemId() == R.id.page_4){
+                    //}else if(item.getItemId() == R.id.page_3){
+                    //    appView.setDisplayedChild(2);
+                } else if (item.getItemId() == R.id.page_4) {
                     appView.setDisplayedChild(3);
-                }else{
+                } else {
                     return false;
                 }
                 return true;
@@ -251,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                                                                                 if (t.isSuccessful()) {
                                                                                     DocumentSnapshot program = t.getResult();
                                                                                     if (program.exists()) {
-                                                                                        String programBy = program.getString("firstname")+" "+program.getString("lastname");
+                                                                                        String programBy = program.getString("firstname") + " " + program.getString("lastname");
                                                                                         ArrayList<String> list = new ArrayList<>();
                                                                                         list.add(0, programName);
                                                                                         list.add(1, programBy);
@@ -306,21 +298,21 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                         if (value != null && value.exists()) {
                             if (value.getBoolean("status")) {
                                 storage.getReferenceFromUrl(value.getString("imgurl")).getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            playerFlipper.setDisplayedChild(1);
-                                            txtNowPlaying.setText(value.getString("nowplaying"));
-                                            txtPresenter.setText(value.getString("presenter"));
-                                            streamUrl = value.getString("streamurl");
-                                            streamOnline = value.getBoolean("status");
-                                            streamImg.setImageURI(uri);
-                                            streamName = value.getString("nowplaying");
-                                            streamBy = value.getString("presenter");
-                                            streamImgUrl = uri;
-                                            loadingPopup.dismiss();
-                                        }
-                                    });
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                playerFlipper.setDisplayedChild(1);
+                                                txtNowPlaying.setText(value.getString("nowplaying"));
+                                                txtPresenter.setText(value.getString("presenter"));
+                                                streamUrl = value.getString("streamurl");
+                                                streamOnline = value.getBoolean("status");
+                                                streamImg.setImageURI(uri);
+                                                streamName = value.getString("nowplaying");
+                                                streamBy = value.getString("presenter");
+                                                streamImgUrl = uri;
+                                                loadingPopup.dismiss();
+                                            }
+                                        });
                             } else {
                                 loadingPopup.dismiss();
                                 playerFlipper.setDisplayedChild(0);
@@ -380,16 +372,16 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
 
         registerNetworkBroadcastReceiver(this);
 
-        if(selectedItem== R.id.page_1){
+        if (selectedItem == R.id.page_1) {
             appView.setDisplayedChild(0);
-        }else if(selectedItem == R.id.page_2){
+        } else if (selectedItem == R.id.page_2) {
             appView.setDisplayedChild(1);
-        //}else if(selectedItem == R.id.page_3){
-        //    appView.setDisplayedChild(2);
-        }else if(selectedItem == R.id.page_4){
+            //}else if(selectedItem == R.id.page_3){
+            //    appView.setDisplayedChild(2);
+        } else if (selectedItem == R.id.page_4) {
             appView.setDisplayedChild(3);
         }
-        
+
         super.onResume();
     }
 
@@ -408,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         bufferBar.setVisibility(View.VISIBLE);
         playButton.setEnabled(false);
 
-        if(btnLibraryPlay.getText().toString().equals("Stop")){
+        if (btnLibraryPlay.getText().toString().equals("Stop")) {
             player.stop();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 audioManager.abandonAudioFocusRequest(focusRequest);
@@ -435,7 +427,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
 
     private void createARadioStreamPlayer() {
         try {
-            if(isInternetAvailable) {
+            if (isInternetAvailable) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     audioManager.requestAudioFocus(focusRequest);
                 }
@@ -465,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                 }
                 playButton.setText("Stop");
                 playButton.setIconResource(R.drawable.ic_baseline_stop_24);
-            }else{
+            } else {
                 Toast.makeText(MainActivity.this, "Can't play due to lost of internet connection!", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
@@ -490,8 +482,8 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     public void shareStream(View view) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Listen to Radio Sihina live stream now. Go to https://radiosihina.ml "+
-                "or Download the Radio Sihina Android or IOS app. Now playing "+streamName+" by "+streamBy);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Listen to Radio Sihina live stream now. Go to https://radiosihina.ml " +
+                "or Download the Radio Sihina Android or IOS app. Now playing " + streamName + " by " + streamBy);
         shareIntent.setType("text/*");
         startActivity(Intent.createChooser(shareIntent, "Share Radio Sihina"));
     }
@@ -505,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
             @Override
             public void onClick(View v) {
                 if (btnLibraryPlay.getText().toString().equals("Play")) {
-                    if(player.isPlaying()){
+                    if (player.isPlaying()) {
                         player.stop();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             audioManager.abandonAudioFocusRequest(focusRequest);
@@ -515,7 +507,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                         playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
                     }
                     try {
-                        if(isInternetAvailable) {
+                        if (isInternetAvailable) {
                             player.reset();
                             player.setDataSource(s3);
                             player.prepare();
@@ -542,7 +534,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                             }
                             btnLibraryPlay.setText("Stop");
                             btnLibraryPlay.setIconResource(R.drawable.ic_baseline_stop_24);
-                        }else{
+                        } else {
                             Toast.makeText(MainActivity.this, "Can't play due to lost of internet connection!", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
@@ -562,8 +554,8 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     }
 
     public void ifPlayingStop(String s, String s1) {
-        if(!(txtLibraryName.getText().toString().equals(s) && txtLibraryDate.getText().toString().equals(s1))){
-            if(player.isPlaying() && playButton.getText().toString().equals("Play")) {
+        if (!(txtLibraryName.getText().toString().equals(s) && txtLibraryDate.getText().toString().equals(s1))) {
+            if (player.isPlaying() && playButton.getText().toString().equals("Play")) {
                 player.stop();
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -583,7 +575,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     @Override
     public void networkUnavailable() {
         isInternetAvailable = false;
-        if(player.isPlaying()){
+        if (player.isPlaying()) {
             Toast.makeText(this, "Player stopped due to network lost", Toast.LENGTH_SHORT).show();
             player.stop();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -598,13 +590,11 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         }
     }
 
-    private boolean playerPaused = false;
-
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
-                if(playerPaused) {
+                if (playerPaused) {
                     player.start();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         audioManager.requestAudioFocus(focusRequest);

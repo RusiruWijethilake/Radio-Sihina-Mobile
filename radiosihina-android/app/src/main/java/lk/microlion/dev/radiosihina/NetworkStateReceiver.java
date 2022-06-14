@@ -11,9 +11,9 @@ import java.util.List;
 
 public class NetworkStateReceiver extends BroadcastReceiver {
 
+    private final String TAG = "NetworkStateReceiver";
     protected List<NetworkStateReceiverListener> listeners;
     protected Boolean connected;
-    private final String TAG = "NetworkStateReceiver";
 
     public NetworkStateReceiver() {
         listeners = new ArrayList<>();
@@ -21,15 +21,15 @@ public class NetworkStateReceiver extends BroadcastReceiver {
     }
 
     public void onReceive(Context context, Intent intent) {
-        if(intent == null || intent.getExtras() == null)
+        if (intent == null || intent.getExtras() == null)
             return;
 
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
-        if(networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
+        if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
             connected = true;
-        } else if(intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
+        } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
             connected = false;
         }
 
@@ -37,15 +37,15 @@ public class NetworkStateReceiver extends BroadcastReceiver {
     }
 
     private void notifyStateToAll() {
-        for(NetworkStateReceiverListener eachNetworkStateReceiverListener : listeners)
+        for (NetworkStateReceiverListener eachNetworkStateReceiverListener : listeners)
             notifyState(eachNetworkStateReceiverListener);
     }
 
     private void notifyState(NetworkStateReceiverListener networkStateReceiverListener) {
-        if(connected == null || networkStateReceiverListener == null)
+        if (connected == null || networkStateReceiverListener == null)
             return;
 
-        if(connected == true) {
+        if (connected == true) {
             networkStateReceiverListener.networkAvailable();
         } else {
             networkStateReceiverListener.networkUnavailable();
@@ -63,6 +63,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
     public interface NetworkStateReceiverListener {
         void networkAvailable();
+
         void networkUnavailable();
     }
 }
