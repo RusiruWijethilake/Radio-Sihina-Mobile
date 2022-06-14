@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Radio Sihina</string>
+    <string name="default_notification_channel_id">radio-sihina-2022</string>
 </resources>
