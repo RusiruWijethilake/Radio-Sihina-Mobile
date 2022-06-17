@@ -19,12 +19,10 @@ import java.util.HashMap;
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHolder> {
 
     private final ArrayList<ArrayList<String>> localDataSet;
-    private final MediaPlayer player;
     private final MainActivity mainActivity;
 
-    public LibraryAdapter(ArrayList<ArrayList<String>> dataSet, MediaPlayer player, MainActivity mainActivity){
+    public LibraryAdapter(ArrayList<ArrayList<String>> dataSet, MainActivity mainActivity){
         this.localDataSet = dataSet;
-        this.player = player;
         this.mainActivity = mainActivity;
     }
 
@@ -45,7 +43,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         holder.getBtnPlay().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.ifPlayingStop(libraryList.get(0), libraryList.get(2));
                 mainActivity.showSelectedLibraryPlayer(libraryList.get(0), libraryList.get(1), libraryList.get(2), libraryList.get(3));
             }
         });

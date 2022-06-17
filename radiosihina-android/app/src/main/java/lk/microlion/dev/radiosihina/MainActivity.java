@@ -18,6 +18,11 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.DownloadListener;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -71,8 +76,9 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
-    private MaterialButton playButton, shareStream, btnLibraryPlay;
+    private MaterialButton shareStream;
     private TextView txtNowPlaying, txtPresenter, txtWhyAdsOne, txtLibraryName, txtLibraryBy, txtLibraryDate;
+    private WebView webViewPlayer, webViewLibraryPlayer;
     private AutoCompleteTextView selectLibrary;
     private NavigationBarView navbar;
     private SimpleDraweeView streamImg;
@@ -85,12 +91,9 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private String streamUrl = "";
     private String streamName = "";
     private String streamBy = "";
-    private Uri streamImgUrl;
-    private boolean streamOnline = false;
     private boolean isInternetAvailable = false;
     private HashMap<String, String> programMap;
 
-    private MediaPlayer player;
     private Notification.Builder playerNotification;
     private NotificationManager notificationManager;
     private AudioManager audioManager;
@@ -112,11 +115,11 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         appView = findViewById(R.id.flipperView);
         playerFlipper = findViewById(R.id.playerFlipper);
         navbar = findViewById(R.id.bottom_navigation);
-        playButton = findViewById(R.id.btnPlay);
         shareStream = findViewById(R.id.shareStream);
         txtNowPlaying = findViewById(R.id.txtProgramName);
         txtPresenter = findViewById(R.id.txtProgramBy);
         txtWhyAdsOne = findViewById(R.id.txtWhyAdsOne);
+        webViewPlayer = findViewById(R.id.webViewPlayer);
         streamImg = findViewById(R.id.streamImage);
         bufferBar = findViewById(R.id.progressBar);
         adPlayerBottom = findViewById(R.id.adPlayerBottom);
@@ -126,37 +129,50 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         txtLibraryName = findViewById(R.id.txtLibraryPlayerName);
         txtLibraryBy = findViewById(R.id.txtLibraryPlayerBy);
         txtLibraryDate = findViewById(R.id.txtLibraryPlayerDate);
-        btnLibraryPlay = findViewById(R.id.btnLibraryPlayerPlay);
+        webViewLibraryPlayer = findViewById(R.id.webViewLibrayPlayer);
         presenterView = findViewById(R.id.presenterView);
 
-        player = new MediaPlayer();
+        webViewPlayer.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+        webViewPlayer.setBackgroundColor(0x00000000);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            webViewPlayer.setForceDarkAllowed(true);
+        }
+        WebSettings webSettings = webViewPlayer.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
-        player.setWakeMode(MainActivity.this, PowerManager.PARTIAL_WAKE_LOCK);
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+        webViewLibraryPlayer.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+        webViewLibraryPlayer.setBackgroundColor(0x00000000);
+        webViewLibraryPlayer.setSaveEnabled(true);
+        webViewLibraryPlayer.setSaveFromParentEnabled(true);
+        webViewLibraryPlayer.setWebViewClient(new WebViewClient());
+        webViewLibraryPlayer.setDownloadListener(new DownloadListener() {
             @Override
-            public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                if (libraryPlayer.getVisibility() != View.VISIBLE) {
-                    bufferBar.setVisibility(View.VISIBLE);
-                    if (percent == 100.00) {
-                        bufferBar.setVisibility(View.INVISIBLE);
-                    }
-                }
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                showInfoMessage("Web", url);
             }
         });
-        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    audioManager.requestAudioFocus(focusRequest);
-                }
-                mp.start();
-            }
-        });
-        player.setAudioAttributes(new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setLegacyStreamType(AudioAttributes.FLAG_LOW_LATENCY)
-                .build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            webViewLibraryPlayer.setForceDarkAllowed(true);
+        }
+        WebSettings webLibrarySettings = webViewLibraryPlayer.getSettings();
+        webLibrarySettings.setJavaScriptEnabled(true);
+
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
+
+        webLibrarySettings.setAllowContentAccess(true);
+        webLibrarySettings.setAppCacheEnabled(true);
+        webLibrarySettings.setMediaPlaybackRequiresUserGesture(false);
+        webLibrarySettings.setAllowContentAccess(true);
+        webLibrarySettings.setAllowFileAccess(true);
+        webLibrarySettings.setBlockNetworkLoads(false);
+        webLibrarySettings.setAllowUniversalAccessFromFileURLs(true);
+        webLibrarySettings.setAllowFileAccessFromFileURLs(true);
+        webLibrarySettings.setSupportMultipleWindows(true);
+        webLibrarySettings.setDomStorageEnabled(true);
+        webLibrarySettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webLibrarySettings.setLoadWithOverviewMode(true);
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -253,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                                                                                         list.add(3, link);
                                                                                         arrayList.add(list);
                                                                                         loadingPopup.dismiss();
-                                                                                        libraryProgramList.setAdapter(new LibraryAdapter(arrayList, player, MainActivity.this));
+                                                                                        libraryProgramList.setAdapter(new LibraryAdapter(arrayList, MainActivity.this));
                                                                                     } else {
                                                                                         showInfoMessage("Error Loading Data", "No recordings from this listener");
                                                                                         loadingPopup.dismiss();
@@ -307,22 +323,20 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
                                                 txtNowPlaying.setText(value.getString("nowplaying"));
                                                 txtPresenter.setText(value.getString("presenter"));
                                                 streamUrl = value.getString("streamurl");
-                                                streamOnline = value.getBoolean("status");
                                                 streamImg.setImageURI(uri);
                                                 streamName = value.getString("nowplaying");
                                                 streamBy = value.getString("presenter");
-                                                streamImgUrl = uri;
                                                 loadingPopup.dismiss();
+                                                webViewPlayer.loadData("<center><audio controls><source src='"+streamUrl+"' type='audio/mpeg'></audio></center>", "", "");
                                             }
                                         });
                             } else {
+                                webViewPlayer.loadData("<center>Stream Offline</center>", "", "");
                                 loadingPopup.dismiss();
                                 playerFlipper.setDisplayedChild(0);
-                                if(player.isPlaying() && playButton.getText().toString().equals("Stop")){
-                                    player.stop();
-                                }
                             }
                         } else {
+                            webViewPlayer.loadData("<center>Stream Offline</center>", "", "");
                             loadingPopup.dismiss();
                             playerFlipper.setDisplayedChild(0);
                             //showInfoMessage("Error loading data", "There is something wrong connecting to the server. " +
@@ -401,87 +415,6 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         super.onStop();
     }
 
-    public void playAudio(View view) {
-        bufferBar.setVisibility(View.VISIBLE);
-        playButton.setEnabled(false);
-
-        if (btnLibraryPlay.getText().toString().equals("Stop")) {
-            player.stop();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                audioManager.abandonAudioFocusRequest(focusRequest);
-            }
-            btnLibraryPlay.setText("Play");
-            btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
-            libraryPlayer.setVisibility(View.GONE);
-        }
-
-        if (player.isPlaying()) {
-            player.stop();
-            notificationManager.cancel(0);
-            playButton.setText("Play");
-            playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
-        } else {
-            if (streamOnline) {
-                loadingPopup.show();
-                createARadioStreamPlayer();
-            }
-        }
-        bufferBar.setVisibility(View.INVISIBLE);
-        playButton.setEnabled(true);
-    }
-
-    private void createARadioStreamPlayer() {
-        try {
-            if (isInternetAvailable) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    audioManager.requestAudioFocus(focusRequest);
-                }
-                player.reset();
-                player.setDataSource(streamUrl);
-                player.prepare();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        playerNotification = new Notification.Builder(MainActivity.this)
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setContentTitle("Radio Sihina Live")
-                                .setContentText("Now playing " + streamName + " by " + streamBy)
-                                .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
-                                .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
-                                .setOngoing(true)
-                                .setAutoCancel(false)
-                                .setChannelId(getString(R.string.default_notification_channel_id));
-                    } else {
-                        playerNotification = new Notification.Builder(MainActivity.this)
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setContentTitle("Radio Sihina Live")
-                                .setContentText("Now playing " + streamName + " by " + streamBy)
-                                .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
-                                .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
-                                .setOngoing(true)
-                                .setAutoCancel(false);
-                    }
-                    notificationManager.notify(0, playerNotification.build());
-                } else {
-                    playerNotification = new Notification.Builder(MainActivity.this)
-                            .setSmallIcon(R.mipmap.ic_launcher_round)
-                            .setContentTitle("Radio Sihina Live")
-                            .setContentText("Now playing " + streamName + " by " + streamBy)
-                            .setOngoing(true)
-                            .setAutoCancel(false)
-                            .setPriority(Notification.PRIORITY_HIGH);
-                    notificationManager.notify(0, playerNotification.build());
-                }
-                playButton.setText("Stop");
-                playButton.setIconResource(R.drawable.ic_baseline_stop_24);
-            } else {
-                Toast.makeText(MainActivity.this, "Can't play due to lost of internet connection!", Toast.LENGTH_SHORT).show();
-            }
-        } catch (IOException e) {
-            Toast.makeText(this, "Can't play the stream. Check you connection.", Toast.LENGTH_SHORT).show();
-        }
-        loadingPopup.dismiss();
-    }
-
     private void showInfoMessage(String title, String message) {
         new MaterialAlertDialogBuilder(this)
                 .setTitle(title)
@@ -509,78 +442,8 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         txtLibraryName.setText(s);
         txtLibraryBy.setText(s1);
         txtLibraryDate.setText(s2);
-        btnLibraryPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnLibraryPlay.getText().toString().equals("Play")) {
-                    if (player.isPlaying()) {
-                        player.stop();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            audioManager.abandonAudioFocusRequest(focusRequest);
-                        }
-                        notificationManager.cancel(0);
-                        playButton.setText("Play");
-                        playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
-                    }
-                    try {
-                        if (isInternetAvailable) {
-                            player.reset();
-                            player.setDataSource(s3);
-                            player.prepare();
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                playerNotification = new Notification.Builder(MainActivity.this)
-                                        .setSmallIcon(R.mipmap.ic_launcher_round)
-                                        .setContentTitle(s)
-                                        .setContentText(s2)
-                                        .setLargeIcon(Icon.createWithResource(MainActivity.this, R.drawable.logo_transparent_background))
-                                        .setStyle(new Notification.MediaStyle().setMediaSession(new MediaSession(MainActivity.this, "RADIO-SIHINA-LIVE").getSessionToken()))
-                                        .setOngoing(true)
-                                        .setAutoCancel(false)
-                                        .setPriority(Notification.PRIORITY_HIGH);
-                                notificationManager.notify(0, playerNotification.build());
-                            } else {
-                                playerNotification = new Notification.Builder(MainActivity.this)
-                                        .setSmallIcon(R.mipmap.ic_launcher_round)
-                                        .setContentTitle(s)
-                                        .setContentText(s2)
-                                        .setOngoing(true)
-                                        .setAutoCancel(false)
-                                        .setPriority(Notification.PRIORITY_HIGH);
-                                notificationManager.notify(0, playerNotification.build());
-                            }
-                            btnLibraryPlay.setText("Stop");
-                            btnLibraryPlay.setIconResource(R.drawable.ic_baseline_stop_24);
-                        } else {
-                            Toast.makeText(MainActivity.this, "Can't play due to lost of internet connection!", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (IOException e) {
-                        Toast.makeText(MainActivity.this, "Can't play the stream. Check you connection.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    player.stop();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        audioManager.abandonAudioFocusRequest(focusRequest);
-                    }
-                    btnLibraryPlay.setText("Play");
-                    btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
-                    libraryPlayer.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    public void ifPlayingStop(String s, String s1) {
-        if (!(txtLibraryName.getText().toString().equals(s) && txtLibraryDate.getText().toString().equals(s1))) {
-            if (player.isPlaying() && playButton.getText().toString().equals("Play")) {
-                player.stop();
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                audioManager.abandonAudioFocusRequest(focusRequest);
-            }
-            btnLibraryPlay.setText("Play");
-            btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
-            libraryPlayer.setVisibility(View.GONE);
-        }
+        webViewPlayer.reload();
+        webViewLibraryPlayer.loadData("<center><audio preload='none' controls><source src='https://firebasestorage.googleapis.com/v0/b/radio-sihina.appspot.com/o/programs-recordings%2FRetro%20Hour%20-%202022-06-11.mp3?alt=media&token=18b3bc8a-cce3-4187-b838-c5cc42fba1f6' type='audio/mpeg'></audio></center>", "", "");
     }
 
     @Override
@@ -591,46 +454,30 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     @Override
     public void networkUnavailable() {
         isInternetAvailable = false;
-        if (player.isPlaying()) {
-            Toast.makeText(this, "Player stopped due to network lost", Toast.LENGTH_SHORT).show();
-            player.stop();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                audioManager.abandonAudioFocusRequest(focusRequest);
-            }
-            btnLibraryPlay.setText("Play");
-            btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
-            libraryPlayer.setVisibility(View.GONE);
-            notificationManager.cancel(0);
-            playButton.setText("Play");
-            playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
+        Toast.makeText(this, "Player stopped due to network lost", Toast.LENGTH_SHORT).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            audioManager.abandonAudioFocusRequest(focusRequest);
         }
+        webViewLibraryPlayer.reload();
+        webViewPlayer.reload();
+        libraryPlayer.setVisibility(View.GONE);
+        notificationManager.cancel(0);
     }
 
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
-                if (playerPaused) {
-                    player.start();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        audioManager.requestAudioFocus(focusRequest);
-                    }
-                    playerPaused = false;
-                }
                 break;
             case AudioManager.AUDIOFOCUS_LOSS:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                playerPaused = false;
-                player.stop();
+                webViewPlayer.reload();
+                webViewLibraryPlayer.reload();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     audioManager.abandonAudioFocusRequest(focusRequest);
                 }
-                btnLibraryPlay.setText("Play");
-                btnLibraryPlay.setIconResource(R.drawable.ic_round_play_arrow_24);
                 libraryPlayer.setVisibility(View.GONE);
                 notificationManager.cancel(0);
-                playButton.setText("Play");
-                playButton.setIconResource(R.drawable.ic_round_play_arrow_24);
                 break;
         }
     }
